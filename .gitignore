@@ -64,3 +64,8 @@ fastlane/test_output
 
 # Credencials privades
 **/Secrets.swift
+.DS_Store
+DerivedData/
+*.xcuserstate
+music-player/music-player.xcodeproj/xcshareddata/
+music-player/music-player/Info.plist
