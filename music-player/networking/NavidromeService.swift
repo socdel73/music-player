@@ -89,12 +89,12 @@ class NavidromeService {
         }.resume()
     }
     // MARK: - 5. STREAMING DE SO
-        /// Genera la URL directa perquè el motor de so xucli el FLAC bit a bit
-        func getStreamURL(for songId: String) -> URL? {
-            // L'endpoint 'stream' de Subsonic envia l'arxiu original.
-            // A la V2 afegirem paràmetres com maxBitrate=0 per assegurar que Navidrome no transcodifiqui mai,
-            // però per defecte, amb clients moderns, enviarà el FLAC pur.
-            let urlString = "\(config.baseURL)/stream?id=\(songId)&\(config.generateAuthParams())"
-            return URL(string: urlString)
-        }
+    /// Genera la URL directa perquè el motor de so xucli el FLAC bit a bit
+    func getStreamURL(for songId: String) -> URL? {
+        // FASE 2: Exigim el Bit-Perfect des de l'origen.
+        // - format=raw: Prohibeix qualsevol transcodificació (evita que passi FLAC a MP3).
+        // - maxBitRate=0: Elimina el límit d'ample de banda que podria forçar un downsampling.
+        let urlString = "\(config.baseURL)/stream?id=\(songId)&\(config.generateAuthParams())&format=raw&maxBitRate=0"
+        return URL(string: urlString)
+    }
 }

@@ -1,8 +1,12 @@
+// views/AlbumDetailView.swift
+
 import SwiftUI
 
 struct AlbumDetailView: View {
     let album: Album
-    @State private var songs: [Song] = []
+    
+    // 1. Instanciem el nou ViewModel i mantenim l'audioManager
+    @StateObject private var viewModel = AlbumDetailViewModel()
     @ObservedObject var audioManager = AudioPlayerManager.shared
     
     var body: some View {
@@ -10,7 +14,7 @@ struct AlbumDetailView: View {
             HStack(alignment: .top, spacing: 30) {
                 // COLUMNA ESQUERRA: Art i Info
                 VStack(spacing: 20) {
-                    if let coverId = album.coverArt, let url = NavidromeService().getCoverArtURL(coverId: coverId) {
+                    if let coverId = album.coverArt, let url = SubsonicConfig().getCoverArtURL(id: coverId) {
                         AsyncImage(url: url) { phase in
                             if let image = phase.image {
                                 image.resizable().aspectRatio(contentMode: .fit)
@@ -29,10 +33,10 @@ struct AlbumDetailView: View {
                 // TRACKLIST
                 ScrollView {
                     VStack(alignment: .leading, spacing: 5) {
-                        ForEach(songs) { song in
+                        ForEach(viewModel.songs) { song in
                             Button(action: {
-                                if let index = songs.firstIndex(where: { $0.id == song.id }) {
-                                    audioManager.startPlayback(songs: songs, fromIndex: index, inAlbum: album)
+                                if let index = viewModel.songs.firstIndex(where: { $0.id == song.id }) {
+                                    audioManager.startPlayback(songs: viewModel.songs, fromIndex: index, inAlbum: album)
                                 }
                             }) {
                                 HStack {
@@ -64,28 +68,40 @@ struct AlbumDetailView: View {
                     }.padding(20)
                 }
             }
+            // Aquí cridem a la variable que conté el reproductor de sota
             reproductorInferior
         }
         .onAppear {
-            NavidromeService().fetchTracks(for: album.id) { result in
-                if case .success(let fetched) = result {
-                    DispatchQueue.main.async { self.songs = fetched }
-                }
-            }
+            // 2. Cridem al ViewModel perquè carregui les dades de Nebraska
+            viewModel.loadSongs(for: album.id)
         }
     }
     
+    // AQUEST ÉS EL BLOC QUE FALTAVA (Actualitzat amb viewModel.songs)
     var reproductorInferior: some View {
         VStack(spacing: 0) {
             Divider()
+            
+            // NOU: BARRA DE PROGRÉS I TEMPS
+            if audioManager.duration > 0 {
+                HStack {
+                    Text(formatTime(audioManager.currentTime)).font(.caption.monospacedDigit()).foregroundColor(.secondary)
+                    ProgressView(value: audioManager.currentTime, total: audioManager.duration)
+                        .tint(.accentColor)
+                    Text(formatTime(audioManager.duration)).font(.caption.monospacedDigit()).foregroundColor(.secondary)
+                }
+                .padding(.horizontal, 30)
+                .padding(.top, 10)
+            }
+            
             HStack(spacing: 25) {
                 HStack(spacing: 15) {
                     Button(action: { audioManager.previousTrack() }) { Image(systemName: "backward.end.fill").font(.title2) }
                     Button(action: { audioManager.seek(seconds: -15) }) { Image(systemName: "gobackward.15").font(.title2) }
                     
                     Button(action: {
-                        if audioManager.currentSong == nil && !songs.isEmpty {
-                            audioManager.startPlayback(songs: songs, fromIndex: 0, inAlbum: album)
+                        if audioManager.currentSong == nil && !viewModel.songs.isEmpty {
+                            audioManager.startPlayback(songs: viewModel.songs, fromIndex: 0, inAlbum: album)
                         } else {
                             audioManager.togglePlayPause()
                         }
@@ -109,7 +125,15 @@ struct AlbumDetailView: View {
                 }.foregroundColor(.green).padding(8).background(Color.green.opacity(0.1)).cornerRadius(6)
             }
             .padding(.horizontal, 30).padding(.vertical, 15)
-            .background(Color(UIColor.secondarySystemBackground))
+            .background(.regularMaterial)
         }
+    }
+    
+    // Afegeix això abans de tancar el struct AlbumDetailView
+    private func formatTime(_ time: Double) -> String {
+        guard !time.isNaN && !time.isInfinite else { return "0:00" }
+        let minutes = Int(time) / 60
+        let seconds = Int(time) % 60
+        return String(format: "%d:%02d", minutes, seconds)
     }
 }

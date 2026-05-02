@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		035893ED2FA69BAB000839E2 /* STATUS.md in Resources */ = {isa = PBXBuildFile; fileRef = 035893EC2FA69BAB000839E2 /* STATUS.md */; };
+		035893EF2FA6A042000839E2 /* AlbumDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035893EE2FA6A03E000839E2 /* AlbumDetailViewModel.swift */; };
 		03FA059C2FA505D10033A86A /* NavidromeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA059B2FA504810033A86A /* NavidromeService.swift */; };
 		03FA05A12FA507C20033A86A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA059E2FA507C20033A86A /* ContentView.swift */; };
 		03FA05A22FA507C20033A86A /* music_playerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA059F2FA507C20033A86A /* music_playerApp.swift */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		035893EC2FA69BAB000839E2 /* STATUS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = STATUS.md; path = ../STATUS.md; sourceTree = SOURCE_ROOT; };
+		035893EE2FA6A03E000839E2 /* AlbumDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewModel.swift; sourceTree = "<group>"; };
 		039788C42FA4FE4A0083925C /* music-player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "music-player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FA05992FA5021B0033A86A /* SubsonicAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsonicAPI.swift; sourceTree = "<group>"; };
 		03FA059B2FA504810033A86A /* NavidromeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavidromeService.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 		03FA05A92FA50A9E0033A86A /* viewmodels */ = {
 			isa = PBXGroup;
 			children = (
+				035893EE2FA6A03E000839E2 /* AlbumDetailViewModel.swift */,
 				03FA05B62FA525B00033A86A /* AudioPlayerManager.swift */,
 			);
 			path = viewmodels;
@@ -257,6 +260,7 @@
 				03FA05A22FA507C20033A86A /* music_playerApp.swift in Sources */,
 				03FA059C2FA505D10033A86A /* NavidromeService.swift in Sources */,
 				03FA05B32FA5188F0033A86A /* AlbumDetailView.swift in Sources */,
+				035893EF2FA6A042000839E2 /* AlbumDetailViewModel.swift in Sources */,
 				03FA05B52FA51AE60033A86A /* MusicFolder.swift in Sources */,
 				03FA05B12FA517C20033A86A /* Songs.swift in Sources */,
 				03FA05B92FA52B4C0033A86A /* Secrets.swift in Sources */,
@@ -390,7 +394,17 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8NLHN5873D;
 				ENABLE_APP_SANDBOX = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "music-player/Info.plist";
@@ -434,7 +448,17 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8NLHN5873D;
 				ENABLE_APP_SANDBOX = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "music-player/Info.plist";
