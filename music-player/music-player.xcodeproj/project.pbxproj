@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		035893ED2FA69BAB000839E2 /* STATUS.md in Resources */ = {isa = PBXBuildFile; fileRef = 035893EC2FA69BAB000839E2 /* STATUS.md */; };
 		03FA059C2FA505D10033A86A /* NavidromeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA059B2FA504810033A86A /* NavidromeService.swift */; };
 		03FA05A12FA507C20033A86A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA059E2FA507C20033A86A /* ContentView.swift */; };
 		03FA05A22FA507C20033A86A /* music_playerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA059F2FA507C20033A86A /* music_playerApp.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		035893EC2FA69BAB000839E2 /* STATUS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = STATUS.md; path = ../STATUS.md; sourceTree = SOURCE_ROOT; };
 		039788C42FA4FE4A0083925C /* music-player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "music-player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FA05992FA5021B0033A86A /* SubsonicAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsonicAPI.swift; sourceTree = "<group>"; };
 		03FA059B2FA504810033A86A /* NavidromeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavidromeService.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 		039788BB2FA4FE490083925C = {
 			isa = PBXGroup;
 			children = (
+				035893EC2FA69BAB000839E2 /* STATUS.md */,
 				03FA05A42FA50A9E0033A86A /* models */,
 				03FA05A82FA50A9E0033A86A /* networking */,
 				03FA05A92FA50A9E0033A86A /* viewmodels */,
@@ -235,6 +238,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				035893ED2FA69BAB000839E2 /* STATUS.md in Resources */,
 				03FA05A32FA507C20033A86A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
