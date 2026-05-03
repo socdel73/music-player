@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		033FD42A2FA7A63600D28E72 /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FD4292FA7A63300D28E72 /* LibraryViewModel.swift */; };
 		035893ED2FA69BAB000839E2 /* STATUS.md in Resources */ = {isa = PBXBuildFile; fileRef = 035893EC2FA69BAB000839E2 /* STATUS.md */; };
 		035893EF2FA6A042000839E2 /* AlbumDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035893EE2FA6A03E000839E2 /* AlbumDetailViewModel.swift */; };
 		03FA059C2FA505D10033A86A /* NavidromeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA059B2FA504810033A86A /* NavidromeService.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		033FD4292FA7A63300D28E72 /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
 		035893EC2FA69BAB000839E2 /* STATUS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = STATUS.md; path = ../STATUS.md; sourceTree = SOURCE_ROOT; };
 		035893EE2FA6A03E000839E2 /* AlbumDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewModel.swift; sourceTree = "<group>"; };
 		039788C42FA4FE4A0083925C /* music-player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "music-player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +55,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		033FD4242FA79F9900D28E72 /* components */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = components;
+			sourceTree = "<group>";
+		};
 		039788C62FA4FE4A0083925C /* music-player */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -134,7 +141,6 @@
 			isa = PBXGroup;
 			children = (
 				03FA059D2FA507C20033A86A /* Assets.xcassets */,
-				03FA059E2FA507C20033A86A /* ContentView.swift */,
 				03FA059F2FA507C20033A86A /* music_playerApp.swift */,
 			);
 			path = "music-player";
@@ -163,6 +169,7 @@
 		03FA05A92FA50A9E0033A86A /* viewmodels */ = {
 			isa = PBXGroup;
 			children = (
+				033FD4292FA7A63300D28E72 /* LibraryViewModel.swift */,
 				035893EE2FA6A03E000839E2 /* AlbumDetailViewModel.swift */,
 				03FA05B62FA525B00033A86A /* AudioPlayerManager.swift */,
 			);
@@ -172,7 +179,9 @@
 		03FA05AA2FA50A9E0033A86A /* views */ = {
 			isa = PBXGroup;
 			children = (
+				033FD4242FA79F9900D28E72 /* components */,
 				03FA05B22FA518270033A86A /* AlbumDetailView.swift */,
+				03FA059E2FA507C20033A86A /* ContentView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -193,6 +202,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				033FD4242FA79F9900D28E72 /* components */,
 				039788C62FA4FE4A0083925C /* music-player */,
 			);
 			name = "music-player";
@@ -255,6 +265,7 @@
 			files = (
 				03FA05AB2FA50A9E0033A86A /* SubsonicAPI.swift in Sources */,
 				03FA05B72FA527530033A86A /* AudioPlayerManager.swift in Sources */,
+				033FD42A2FA7A63600D28E72 /* LibraryViewModel.swift in Sources */,
 				03FA05AD2FA50A9E0033A86A /* NavidromeService.swift in Sources */,
 				03FA05A12FA507C20033A86A /* ContentView.swift in Sources */,
 				03FA05A22FA507C20033A86A /* music_playerApp.swift in Sources */,

@@ -1,6 +1,6 @@
 import Foundation
 
-// Les capes per desembolicar la resposta de Nebraska
+// El contenidor principal de la resposta de l'API
 struct SubsonicFoldersResponse: Codable {
     let subsonicResponse: SubsonicFoldersData
     
@@ -17,8 +17,10 @@ struct MusicFoldersList: Codable {
     let musicFolder: [MusicFolder]
 }
 
-// L'objecte Llibreria (Ex: ID: 1, Name: "Directes Nugs")
+/// L'objecte que representa una "Biblioteca" a Nebraska (ex: "CDs", "Directes Nugs")
 struct MusicFolder: Identifiable, Codable, Hashable {
-    let id: Int
+    let id: Int // Navidrome utilitza Ints per als IDs de carpetes
     let name: String
+    
+    // Identifiable requereix un ID únic, l'Int ja ens serveix
 }

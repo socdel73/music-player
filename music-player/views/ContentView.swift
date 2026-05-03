@@ -1,82 +1,53 @@
-import SwiftUI // <--- AQUESTA LÍNIA ÉS OBLIGATÒRIA
+import SwiftUI
 
 struct ContentView: View {
-    // 1. ESTAT DE LES DADES
-    @State private var albums: [Album] = []
-    @State private var folders: [MusicFolder] = []
-    @State private var selectedFolderId: Int? = nil
-    
-    // Instanciem el servei
-    private let service = NavidromeService()
+    // 1. Instanciem el ViewModel (ell gestionarà l'estat)
+    @StateObject private var viewModel = LibraryViewModel()
     
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
                 
-                // 2. SELECTOR DE BIBLIOTECA (La teva "Brúixola")
-                if !folders.isEmpty {
-                    Picker("Biblioteca", selection: $selectedFolderId) {
+                // 2. Selector de Biblioteca (Llegeix del ViewModel)
+                if !viewModel.folders.isEmpty {
+                    Picker("Biblioteca", selection: $viewModel.selectedFolderId) {
                         Text("Totes").tag(nil as Int?)
-                        ForEach(folders) { folder in
+                        ForEach(viewModel.folders) { folder in
                             Text(folder.name).tag(folder.id as Int?)
                         }
                     }
                     .pickerStyle(.segmented)
                     .padding()
-                }
-                
-                // 3. LA GRALLA D'ÀLBUMS
-                // Dins de ContentView.swift, a la secció 3 (LA GRALLA D'ÀLBUMS)
-                
-                ScrollView {
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
-                        ForEach(albums) { album in
-                            NavigationLink(destination: AlbumDetailView(album: album)) {
-                                // Utilitzem el nou component que hem creat
-                                AlbumCardView(album: album)
-                            }
-                            .buttonStyle(PlainButtonStyle()) // Evita que el text es torni blau per ser un link
+                    .onChange(of: viewModel.selectedFolderId) { newValue in
+                        // Deleguem la càrrega al ViewModel
+                        Task {
+                            await viewModel.folderChanged(to: newValue)
                         }
                     }
-                    .padding()
+                }
+                
+                // 3. Graella d'Àlbums
+                ScrollView {
+                    if viewModel.isLoading && viewModel.albums.isEmpty {
+                        ProgressView("Connectant a Nebraska...")
+                            .padding(.top, 50)
+                    } else {
+                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                            ForEach(viewModel.albums) { album in
+                                NavigationLink(destination: AlbumDetailView(album: album)) {
+                                    AlbumCardView(album: album)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                            }
+                        }
+                        .padding()
+                    }
                 }
             }
             .navigationTitle("SocDel73 Player")
-            
-            // 4. LÒGICA DE CÀRREGA ASÍNCRONA (Fase 3)
+            // 4. Disparador inicial
             .task {
-                await loadInitialData()
-            }
-            // 5. REACCIÓ AL CANVI DE FILTRE
-            .onChange(of: selectedFolderId) { newValue in
-                loadAlbums(folderId: newValue)
-            }
-        }
-    }
-    
-    // --- FUNCIONS DE SUPORT ---
-    
-    private func loadInitialData() async {
-        do {
-            let fetchedFolders = try await service.fetchMusicFolders()
-            await MainActor.run {
-                self.folders = fetchedFolders
-            }
-            loadAlbums(folderId: nil)
-        } catch {
-            print("❌ Error inicial: \(error)")
-        }
-    }
-    
-    private func loadAlbums(folderId: Int?) {
-        service.fetchRecentAlbums(folderId: folderId) { result in
-            switch result {
-            case .success(let fetchedAlbums):
-                DispatchQueue.main.async {
-                    self.albums = fetchedAlbums
-                }
-            case .failure(let error):
-                print("❌ Error carregant àlbums: \(error)")
+                await viewModel.setup()
             }
         }
     }
