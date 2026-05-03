@@ -1,5 +1,24 @@
 # Estat del Projecte: SocDel73 Player
 
+# STATUS - SocDel73 Player (V1.0)
+## 📅 Sessió: 03/05/2026 - Tancament de la Fase 3
+
+### ✅ ESTAT ACTUAL: FASE 3 COMPLETADA
+- **Motor d'Àudio**: Implementat `AVAudioEngine` amb càrrega asíncrona i telemetria Bit-Perfect (kHz reals).
+- **Arquitectura**: MVVM estricte. Els ViewModels utilitzen `@MainActor` per garantir l'estabilitat de la UI.
+- **Multiplataforma**: Codi blindat amb directives `#if os(iOS)` per a compatibilitat total entre macOS, iPad i iPhone.
+- **Biblioteca**: Lògica de carpetes físiques (Nebraska) operativa.
+
+### 🛠️ ARXIUS DE REFERÈNCIA
+- `viewmodels/AudioPlayerManager.swift`: Cor de l'app (Audiòfil).
+- `viewmodels/LibraryViewModel.swift`: Gestor de la col·lecció de Nebraska.
+- `views/AlbumDetailView.swift`: Interfície de reproducció i llistat de cançons.
+
+### 🚧 PROPERS PASSOS: FASE 4 (AUTENTICACIÓ)
+- Creació de la `LoginView`.
+- Implementació de **Keychain** per guardar URL, usuari i password de forma encriptada.
+- Eliminació del fitxer `Secrets.swift`.
+
 ## 📅 Última actualització: 03/05/2026 (Tancament Fase 3)
 
 ## 🎯 Objectiu actual
