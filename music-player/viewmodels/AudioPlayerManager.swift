@@ -53,9 +53,9 @@ class AudioPlayerManager: ObservableObject {
     }
     
     private func setupEngine() {
-        // Connectem el node de reproducció al mesclador principal del sistema
         engine.attach(playerNode)
-        engine.connect(playerNode, to: engine.mainMixerNode, format: nil)
+        // No connectem aquí definitivament amb 'nil',
+        // ho farem dinàmicament a 'prepareAndPlay'
         
         do {
             try engine.start()
@@ -109,6 +109,10 @@ class AudioPlayerManager: ObservableObject {
             let audioFile = try AVAudioFile(forReading: fileURL)
             self.currentAudioFile = audioFile
             let format = audioFile.processingFormat
+            
+            // RE-CONNEXIÓ DINÀMICA: Forcem el motor a usar el format de l'arxiu
+            engine.disconnectNodeOutput(playerNode)
+            engine.connect(playerNode, to: engine.mainMixerNode, format: format)
             
             // LLEGIM LA QUALITAT REAL!
             let sampleRate = format.sampleRate
