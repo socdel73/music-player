@@ -1,5 +1,35 @@
 # Estat del Projecte: SocDel73 Player
 
+## 📅 Última actualització: 03/05/2026 (Tancament Fase 3)
+
+## 🎯 Objectiu actual
+- **Fase 3 COMPLETADA**: Biblioteca organitzada per carpetes físiques de Nebraska i arquitectura MVVM consolidada.
+- **Iniciant Fase 4**: Implementació de seguretat, Keychain i pantalla de Login.
+
+## ✅ Què funciona (Assoliments de la sessió)
+- **Arquitectura MVVM**: Separació total de responsabilitats. `ContentView` ara és una vista "tonta" que només observa el `LibraryViewModel`.
+- **Motor de So (Fase 2 avançada)**: Implementada la telemetria Bit-Perfect. L'app ja llegeix i mostra la freqüència de mostreig real (ex: 44.1kHz, 96kHz) directament des del buffer d'àudio.
+- **Interfície Dinàmica**: Selector de biblioteques (Picker) funcional que filtra els àlbums de Nebraska segons la carpeta física (Nugs, Bruce, CD).
+- **Càrrega Asíncrona**: Implementació d'art d'àlbum via `AsyncImage` i gestió de xarxa amb `async/await` a la capa de carpetes.
+- **Git Flow**: Historial netejat i sincronitzat amb el repositori remot.
+
+## 🛠 Arxius clau actuals
+- `models/MusicFolder.swift`: Estructura de dades de les biblioteques físiques.
+- `viewmodels/LibraryViewModel.swift`: El nou "cervell" de la biblioteca. Gestiona estats de càrrega i filtres.
+- `viewmodels/AudioPlayerManager.swift`: Motor de so basat en `AVAudioEngine` amb telemetria Bit-Perfect.
+- `views/ContentView.swift`: Interfície principal neta i reactiva.
+- `views/components/AlbumCardView.swift`: Component reutilitzable per a la graella d'àlbums.
+
+## 🚧 Propers passos (Objectiu Pròxima Sessió)
+1. **Atacar la Fase 4**: Crear la `LoginView.swift`.
+2. Implementar el gestor de credencials amb **Keychain** per eliminar el fitxer `Secrets.swift`.
+3. Migrar la funció `fetchRecentAlbums` de closures a `async/await`.
+
+## ⚠️ Línies Vermelles
+- **No tocar el disseny visual**: Seguim amb el layout base per centrar-nos en la seguretat.
+- **Mantenir Bit-Perfect**: Qualsevol canvi no pot degradar la qualitat de la mostra.
+
+
 ## 📅 Última actualització: 03/05/2026 (Tancament Fase 2)
 
 ## 🎯 Objectiu actual
