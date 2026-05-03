@@ -1,6 +1,6 @@
+// viewmodels/AudioPlayerManager.swift
 import Foundation
 import AVFoundation
-import MediaPlayer
 import Combine
 
 class AudioPlayerManager: ObservableObject {
@@ -18,97 +18,100 @@ class AudioPlayerManager: ObservableObject {
     private var queue: [Song] = []
     private var currentTrackIndex: Int = 0
     private var currentAudioFile: AVAudioFile?
-    private var playSessionId = UUID()
     private var seekFrameOffset: AVAudioFramePosition = 0
     private var displayTimer: Timer?
     private var downloadTask: URLSessionDownloadTask?
     
     private init() {
         setupAudioSession()
-        setupEngine()
-        setupRemoteCommandCenter()
+        // Només l'adjuntem, NO el preparem ni l'arrenquem encara.
+        engine.attach(playerNode)
     }
     
     private func setupAudioSession() {
 #if os(iOS)
         do {
-            let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playback, mode: .default, policy: .longFormAudio)
-            try session.setActive(true)
-        } catch { print("❌ Error Audio Session: \(error)") }
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch { print("❌ Session Error") }
 #endif
     }
     
-    private func setupEngine() {
-        engine.attach(playerNode)
-        // No fem el start() aquí per evitar el crash si no hi ha connexions llestes.
-        engine.prepare()
-    }
-    
+    // MARK: - Controls
     func startPlayback(songs: [Song], fromIndex index: Int, inAlbum album: Album) {
         self.queue = songs
-        playTrack(at: index)
+        self.playTrack(at: index)
+    }
+    
+    func togglePlayPause() {
+        if playerNode.isPlaying {
+            playerNode.pause()
+            isPlaying = false
+        } else if currentAudioFile != nil {
+            try? engine.start()
+            playerNode.play()
+            isPlaying = true
+        }
+    }
+    
+    func nextTrack() { if currentTrackIndex + 1 < queue.count { playTrack(at: currentTrackIndex + 1) } }
+    func previousTrack() { if currentTrackIndex > 0 { playTrack(at: currentTrackIndex - 1) } }
+    
+    func seek(seconds: Double) {
+        guard let file = currentAudioFile else { return }
+        playerNode.stop()
+        let sr = file.processingFormat.sampleRate
+        let currentFrame = seekFrameOffset + (playerNode.lastRenderTime.flatMap { playerNode.playerTime(forNodeTime: $0)?.sampleTime } ?? 0)
+        var target = currentFrame + AVAudioFramePosition(seconds * sr)
+        target = max(0, min(target, file.length))
+        self.seekFrameOffset = target
+        
+        let framesToPlay = AVAudioFrameCount(file.length - target)
+        if framesToPlay > 0 {
+            playerNode.scheduleSegment(file, startingFrame: target, frameCount: framesToPlay, at: nil)
+            if isPlaying { playerNode.play() }
+        }
     }
     
     private func playTrack(at index: Int) {
-        guard index >= 0 && index < queue.count else { return }
         self.currentTrackIndex = index
         let song = queue[index]
-        
-        DispatchQueue.main.async {
-            self.currentSong = song
-            self.isPlaying = false
-        }
+        DispatchQueue.main.async { self.currentSong = song; self.isPlaying = false }
         
         playerNode.stop()
         downloadTask?.cancel()
         
         guard let url = NavidromeService().getStreamURL(for: song.id) else { return }
-        
-        downloadTask = URLSession.shared.downloadTask(with: url) { [weak self] tempURL, _, error in
-            guard let self = self, let tempURL = tempURL, error == nil else { return }
-            self.prepareAndPlay(fileURL: tempURL)
+        downloadTask = URLSession.shared.downloadTask(with: url) { [weak self] url, _, _ in
+            if let url = url { self?.prepareAndPlay(fileURL: url) }
         }
         downloadTask?.resume()
     }
     
     private func prepareAndPlay(fileURL: URL) {
         do {
-            let audioFile = try AVAudioFile(forReading: fileURL)
-            self.currentAudioFile = audioFile
-            let format = audioFile.processingFormat
+            let file = try AVAudioFile(forReading: fileURL)
+            self.currentAudioFile = file
+            let format = file.processingFormat
             
-            // Re-connexió dinàmica Bit-Perfect
-            engine.disconnectNodeOutput(playerNode)
+            // CONNECTEM ARA (Just abans de sonar)
             engine.connect(playerNode, to: engine.mainMixerNode, format: format)
+            engine.prepare()
+            try engine.start()
             
-            // Arrencada segura
-            if !engine.isRunning { try engine.start() }
-            
-            let totalSeconds = Double(audioFile.length) / format.sampleRate
-            self.seekFrameOffset = 0
-            let currentSession = UUID()
-            self.playSessionId = currentSession
-            
-            playerNode.scheduleFile(audioFile, at: nil) { [weak self] in
-                DispatchQueue.main.async {
-                    guard let self = self, self.playSessionId == currentSession else { return }
-                    self.nextTrack()
-                }
-            }
-            
+            playerNode.scheduleFile(file, at: nil, completionHandler: nil)
             playerNode.play()
             
             DispatchQueue.main.async {
                 self.currentSampleRate = format.sampleRate
-                self.duration = totalSeconds
+                self.duration = Double(file.length) / format.sampleRate
                 self.isPlaying = true
                 self.startDisplayTimer()
             }
-        } catch { print("❌ Error Motor: \(error)") }
+        } catch { print("❌ Engine Error: \(error)") }
     }
     
-    func nextTrack() { if currentTrackIndex + 1 < queue.count { playTrack(at: currentTrackIndex + 1) } }
+    // viewmodels/AudioPlayerManager.swift
     
     private func startDisplayTimer() {
         displayTimer?.invalidate()
@@ -116,10 +119,14 @@ class AudioPlayerManager: ObservableObject {
             guard let self = self, self.isPlaying,
                   let nodeTime = self.playerNode.lastRenderTime,
                   let playerTime = self.playerNode.playerTime(forNodeTime: nodeTime) else { return }
+            
             let absoluteFrame = self.seekFrameOffset + playerTime.sampleTime
-            DispatchQueue.main.async { self.currentTime = Double(absoluteFrame) / self.currentSampleRate }
+            let calculatedTime = Double(absoluteFrame) / self.currentSampleRate
+            
+            // CRITICAL: Sempre al fil principal per evitar l'error de "view updates"
+            DispatchQueue.main.async {
+                self.currentTime = calculatedTime
+            }
         }
     }
-    
-    private func setupRemoteCommandCenter() { /* Implementació MPNowPlayingInfoCenter */ }
 }

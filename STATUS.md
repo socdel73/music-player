@@ -1,5 +1,26 @@
 # Estat del Projecte: SocDel73 Player
 
+# STATUS - SocDel73 Player (V1.0)
+## 📅 Sessió: 03/05/2026 - Tancament Fase 3
+
+### ✅ ESTAT ACTUAL: FASE 3 COMPLETADA
+- **Arquitectura**: MVVM consolidada amb ViewModels protegits per `@MainActor`.
+- **Motor de So**: `AVAudioEngine` estable amb telemetria Bit-Perfect (kHz reals).
+- **Interfície**: Llista d'àlbums i detall de cançons funcional en iOS i iPadOS.
+- **Navegació**: Corregit el bug de la pantalla en blanc a l'iPad.
+
+### 🛠️ ARXIUS MODIFICATS
+1. `AudioPlayerManager.swift`: Motor blindat contra crashes d'inicialització.
+2. `AlbumDetailView.swift`: UI sincronitzada amb el motor i llista de cançons.
+3. `AlbumDetailViewModel.swift`: Gestió asíncrona de cançons amb protecció de fils.
+4. `ContentView.swift`: Forçat estil de navegació per a compatibilitat total.
+
+### 🚧 PROPERS PASSOS (FASE 4)
+- Disseny de la pantalla de **Login**.
+- Implementació de **Keychain** per a la persistència segura de credencials.
+- Eliminació definitiva de l'arxiu `Secrets.swift`.
+
+
 ## 📅 Última actualització: 03/05/2026 (Tancament Fase 3)
 
 ## 🎯 Objectiu actual

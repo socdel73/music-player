@@ -1,27 +1,25 @@
-// viewmodels/AlbumDetailViewModel.swift
-
 import Foundation
 import Combine
 
+@MainActor // Crucial per evitar l'error de "view updates"
 class AlbumDetailViewModel: ObservableObject {
     @Published var songs: [Song] = []
-    @Published var isLoading = false
+    @Published var isLoading: Bool = false
     
-    // Instanciem el teu servei actual
-    private let navidromeService = NavidromeService()
+    private let service = NavidromeService()
     
-    func loadSongs(for albumId: String) {
-        self.isLoading = true
+    func loadSongs(for albumId: String) async {
+        guard !isLoading else { return }
+        isLoading = true
         
-        navidromeService.fetchTracks(for: albumId) { [weak self] result in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                if case .success(let fetched) = result {
-                    self?.songs = fetched
-                } else if case .failure(let error) = result {
-                    print("Error carregant cançons: \(error.localizedDescription)")
-                }
+        service.fetchTracks(for: albumId) { [weak self] result in
+            switch result {
+            case .success(let fetchedSongs):
+                self?.songs = fetchedSongs
+            case .failure(let error):
+                print("❌ Error carregant cançons: \(error)")
             }
+            self?.isLoading = false
         }
     }
 }
