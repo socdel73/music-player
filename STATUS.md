@@ -1,5 +1,36 @@
 # Estat del Projecte: SocDel73 Player
 
+
+Sessió: 04/05/2026 - Tancament de la Fase 4
+
+✅ ESTAT ACTUAL: FASE 4 FINALITZADA
+Autenticació: LoginView implementada i funcional en macOS/iOS.
+
+Seguretat: KeychainHelper i AuthManager gestionant credencials encriptades.
+
+Networking: SubsonicAPI i NavidromeService adaptats per a connexions dinàmiques i segures.
+
+🛠️ ARXIUS DE REFERÈNCIA ACTUALITZATS
+Utilities/KeychainHelper.swift
+
+ViewModels/AuthManager.swift
+
+Views/LoginView.swift
+
+Networking/SubsonicAPI.swift (Ara dinàmic)
+
+Networking/NavidromeService.swift (Adaptat)
+
+🚧 PROPERS PASSOS: FASE 5 (LLIBRERIA ASYNC I PERSISTÈNCIA)
+Ara que la porta és segura, hem d'optimitzar com l'usuari es mou per l'interior de la biblioteca. La sessió de demà ens portarà a:
+
+Logout segur: Implementar la capacitat de sortir i esborrar el Keychain des de la UI.
+
+Càrrega Asíncrona Avançada: Evitar que l'app "es congeli" mentre descarrega la llista d'àlbums de Bruce Springsteen o els CD importats.
+
+Gestió d'Errors Audiòfila: Si el servidor Nebraska no respon, donarem missatges clars i elegants en lloc de crashejar.
+
+
 # STATUS - SocDel73 Player (V1.0)
 ## 📅 Sessió: 03/05/2026 - Tancament de la Fase 3
 
@@ -18,6 +49,25 @@
 - Creació de la `LoginView`.
 - Implementació de **Keychain** per guardar URL, usuari i password de forma encriptada.
 - Eliminació del fitxer `Secrets.swift`.
+
+notes (
+
+Checklist de Tancament de Sessió:
+Codi Sincronitzat: Has corregit el crash de AVAudioEngine, la navegació de l'iPad i els conflictes de fils.
+
+Commit fet: La branca main de GitHub ja té la versió estable de la Fase 3.
+
+STATUS.md actualitzat: El diari de bord de "Nebraska" reflecteix que la biblioteca ja llista i reprodueix amb telemetria real.
+
+🚧 Full de ruta per a demà: Fase 4 (Autenticació)
+Demà deixarem de banda els arxius de configuració manuals i atacarem la seguretat professional:
+
+Keychain: Guardarem les teves credencials de music.socdel73.com de forma encriptada al xip de seguretat del dispositiu.
+
+LoginView: Una interfície neta per introduir URL, usuari i password.
+
+Eliminació de Secrets: Esborrarem definitivament qualsevol rastre de contrasenyes en el codi font.
+)
 
 ## 📅 Última actualització: 03/05/2026 (Tancament Fase 3)
 

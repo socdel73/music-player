@@ -1,88 +1,96 @@
 import Foundation
 
+// Definim les respostes aquí mateix si no les troba en altres fitxers per garantir que compile
+
+
 class NavidromeService {
-    // ⚙️ Configuració de connexió (URL, credencials, MD5)
-    private let config = SubsonicConfig()
+    private let api = SubsonicAPI()
     
-    // MARK: - 1. LLIBRERIES (Carpetes Físiques) - ACTUALITZAT ASYNC
-    /// Demana a Nebraska quines carpetes de música tenim (ex: "Nugs", "CDs")
-    /// Migrat a Async/Await per a la Fase 3.
+    private func getBaseURL() -> String? {
+        let auth = AuthManager()
+        guard let creds = auth.getCredentials() else { return nil }
+        return creds.url.hasSuffix("/") ? "\(creds.url)rest" : "\(creds.url)/rest"
+    }
+    
+    // MARK: - 1. LIBRARIES
     func fetchMusicFolders() async throws -> [MusicFolder] {
-        let urlString = "\(config.baseURL)/getMusicFolders?\(config.generateAuthParams())"
-        
-        guard let url = URL(string: urlString) else {
-            throw URLError(.badURL)
+        guard let authParams = api.generateAuthParams(),
+              let baseURL = getBaseURL() else {
+            throw URLError(.userAuthenticationRequired)
         }
         
-        let (data, response) = try await URLSession.shared.data(from: url)
+        let urlString = "\(baseURL)/getMusicFolders?\(authParams)"
+        guard let url = URL(string: urlString) else { throw URLError(.badURL) }
         
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw URLError(.badServerResponse)
-        }
-        
-        let decoder = JSONDecoder()
-        let decodedResponse = try decoder.decode(SubsonicFoldersResponse.self, from: data)
-        
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let decodedResponse = try JSONDecoder().decode(SubsonicFoldersResponse.self, from: data)
         return decodedResponse.subsonicResponse.musicFolders.musicFolder
     }
     
-    // MARK: - 2. ÀLBUMS (Legacy Closure)
-    /// Obté els 200 àlbums més recents.
+    // MARK: - 2. ALBUMS
     func fetchRecentAlbums(folderId: Int? = nil, completion: @escaping (Result<[Album], Error>) -> Void) {
-        var urlString = "\(config.baseURL)/getAlbumList2?type=newest&size=200&\(config.generateAuthParams())"
-        
-        if let id = folderId {
-            urlString += "&musicFolderId=\(id)"
+        guard let authParams = api.generateAuthParams(),
+              let baseURL = getBaseURL() else {
+            completion(.failure(URLError(.userAuthenticationRequired)))
+            return
         }
+        
+        var urlString = "\(baseURL)/getAlbumList2?type=newest&size=200&\(authParams)"
+        if let id = folderId { urlString += "&musicFolderId=\(id)" }
         
         guard let url = URL(string: urlString) else { return }
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error { completion(.failure(error)); return }
             guard let data = data else { return }
             
             do {
-                let decoder = JSONDecoder()
-                let response = try decoder.decode(SubsonicResponse.self, from: data)
-                let albums = response.subsonicResponse.albumList2.album
-                completion(.success(albums))
+                let decodedResponse = try JSONDecoder().decode(SubsonicAlbumListResponse.self, from: data)
+                completion(.success(decodedResponse.subsonicResponse.albumList2.album))
             } catch {
                 completion(.failure(error))
             }
         }.resume()
     }
     
-    // MARK: - 3. CARÀTULES
-    func getCoverArtURL(coverId: String) -> URL? {
-        let urlString = "\(config.baseURL)/getCoverArt?id=\(coverId)&size=300&\(config.generateAuthParams())"
-        return URL(string: urlString)
-    }
-    
-    // MARK: - 4. TRACKLIST (Legacy Closure)
+    // MARK: - 3. TRACKLIST
     func fetchTracks(for albumId: String, completion: @escaping (Result<[Song], Error>) -> Void) {
-        let urlString = "\(config.baseURL)/getAlbum?id=\(albumId)&\(config.generateAuthParams())"
+        guard let authParams = api.generateAuthParams(),
+              let baseURL = getBaseURL() else {
+            completion(.failure(URLError(.userAuthenticationRequired)))
+            return
+        }
         
+        let urlString = "\(baseURL)/getAlbum?id=\(albumId)&\(authParams)"
         guard let url = URL(string: urlString) else { return }
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error { completion(.failure(error)); return }
             guard let data = data else { return }
             
             do {
-                let decoder = JSONDecoder()
-                let response = try decoder.decode(SubsonicAlbumResponse.self, from: data)
-                let songs = response.subsonicResponse.album.song ?? []
+                let decodedResponse = try JSONDecoder().decode(SubsonicAlbumResponse.self, from: data)
+                let songs = decodedResponse.subsonicResponse.album.song ?? []
                 completion(.success(songs))
             } catch {
                 completion(.failure(error))
             }
         }.resume()
     }
-    
-    // MARK: - 5. STREAMING DE SO (Bit-Perfect)
+    // MARK: - 4. CARÀTULES
+    func getCoverArtURL(coverId: String) -> URL? {
+        // Cridem al mètode que ja hem definit a la nostra lògica d'API
+        return api.getCoverArtURL(id: coverId)
+    }
+    // MARK: - 5. STREAMING (So Audiòfil)
     func getStreamURL(for songId: String) -> URL? {
-        // FASE 2: Forcem format RAW per evitar transcodificació al servidor Nebraska
-        let urlString = "\(config.baseURL)/stream?id=\(songId)&\(config.generateAuthParams())&format=raw&maxBitRate=0"
+        guard let authParams = api.generateAuthParams(),
+              let baseURL = getBaseURL() else {
+            return nil
+        }
+        
+        // Construïm la URL de stream. Navidrome retornarà el FLAC original si no especifiquem format.
+        let urlString = "\(baseURL)/stream?id=\(songId)&\(authParams)"
         return URL(string: urlString)
     }
 }

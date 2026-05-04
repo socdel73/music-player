@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		033AC7022FA8ED2400E880E5 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033AC7012FA8ED2300E880E5 /* AuthManager.swift */; };
+		033AC7092FA8F08400E880E5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033AC7082FA8F08100E880E5 /* LoginView.swift */; };
 		033FD42A2FA7A63600D28E72 /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FD4292FA7A63300D28E72 /* LibraryViewModel.swift */; };
 		035893ED2FA69BAB000839E2 /* STATUS.md in Resources */ = {isa = PBXBuildFile; fileRef = 035893EC2FA69BAB000839E2 /* STATUS.md */; };
 		035893EF2FA6A042000839E2 /* AlbumDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035893EE2FA6A03E000839E2 /* AlbumDetailViewModel.swift */; };
@@ -21,10 +23,11 @@
 		03FA05B32FA5188F0033A86A /* AlbumDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA05B22FA518270033A86A /* AlbumDetailView.swift */; };
 		03FA05B52FA51AE60033A86A /* MusicFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA05B42FA51AE50033A86A /* MusicFolder.swift */; };
 		03FA05B72FA527530033A86A /* AudioPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA05B62FA525B00033A86A /* AudioPlayerManager.swift */; };
-		03FA05B92FA52B4C0033A86A /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA05B82FA52A940033A86A /* Secrets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		033AC7012FA8ED2300E880E5 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		033AC7082FA8F08100E880E5 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		033FD4292FA7A63300D28E72 /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
 		035893EC2FA69BAB000839E2 /* STATUS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = STATUS.md; path = ../STATUS.md; sourceTree = SOURCE_ROOT; };
 		035893EE2FA6A03E000839E2 /* AlbumDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewModel.swift; sourceTree = "<group>"; };
@@ -41,7 +44,6 @@
 		03FA05B22FA518270033A86A /* AlbumDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailView.swift; sourceTree = "<group>"; };
 		03FA05B42FA51AE50033A86A /* MusicFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicFolder.swift; sourceTree = "<group>"; };
 		03FA05B62FA525B00033A86A /* AudioPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerManager.swift; sourceTree = "<group>"; };
-		03FA05B82FA52A940033A86A /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -55,6 +57,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		033AC6FD2FA8ECDD00E880E5 /* Utilities */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		033FD4242FA79F9900D28E72 /* components */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = components;
@@ -84,6 +91,7 @@
 		039788BB2FA4FE490083925C = {
 			isa = PBXGroup;
 			children = (
+				033AC6FD2FA8ECDD00E880E5 /* Utilities */,
 				035893EC2FA69BAB000839E2 /* STATUS.md */,
 				03FA05A42FA50A9E0033A86A /* models */,
 				03FA05A82FA50A9E0033A86A /* networking */,
@@ -161,7 +169,6 @@
 			children = (
 				03FA05A62FA50A9E0033A86A /* NavidromeService.swift */,
 				03FA05A72FA50A9E0033A86A /* SubsonicAPI.swift */,
-				03FA05B82FA52A940033A86A /* Secrets.swift */,
 			);
 			path = networking;
 			sourceTree = "<group>";
@@ -169,6 +176,7 @@
 		03FA05A92FA50A9E0033A86A /* viewmodels */ = {
 			isa = PBXGroup;
 			children = (
+				033AC7012FA8ED2300E880E5 /* AuthManager.swift */,
 				033FD4292FA7A63300D28E72 /* LibraryViewModel.swift */,
 				035893EE2FA6A03E000839E2 /* AlbumDetailViewModel.swift */,
 				03FA05B62FA525B00033A86A /* AudioPlayerManager.swift */,
@@ -179,6 +187,7 @@
 		03FA05AA2FA50A9E0033A86A /* views */ = {
 			isa = PBXGroup;
 			children = (
+				033AC7082FA8F08100E880E5 /* LoginView.swift */,
 				033FD4242FA79F9900D28E72 /* components */,
 				03FA05B22FA518270033A86A /* AlbumDetailView.swift */,
 				03FA059E2FA507C20033A86A /* ContentView.swift */,
@@ -202,6 +211,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				033AC6FD2FA8ECDD00E880E5 /* Utilities */,
 				033FD4242FA79F9900D28E72 /* components */,
 				039788C62FA4FE4A0083925C /* music-player */,
 			);
@@ -269,12 +279,13 @@
 				03FA05AD2FA50A9E0033A86A /* NavidromeService.swift in Sources */,
 				03FA05A12FA507C20033A86A /* ContentView.swift in Sources */,
 				03FA05A22FA507C20033A86A /* music_playerApp.swift in Sources */,
+				033AC7022FA8ED2400E880E5 /* AuthManager.swift in Sources */,
 				03FA059C2FA505D10033A86A /* NavidromeService.swift in Sources */,
 				03FA05B32FA5188F0033A86A /* AlbumDetailView.swift in Sources */,
 				035893EF2FA6A042000839E2 /* AlbumDetailViewModel.swift in Sources */,
 				03FA05B52FA51AE60033A86A /* MusicFolder.swift in Sources */,
 				03FA05B12FA517C20033A86A /* Songs.swift in Sources */,
-				03FA05B92FA52B4C0033A86A /* Secrets.swift in Sources */,
+				033AC7092FA8F08400E880E5 /* LoginView.swift in Sources */,
 				03FA05AF2FA5145B0033A86A /* Album.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

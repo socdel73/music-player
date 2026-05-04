@@ -1,30 +1,42 @@
-// networking/SubsonicAPI.swift
-
 import Foundation
 import CryptoKit
 
-struct SubsonicConfig {
-    let baseURL = Secrets.baseURL + "/rest"
-    let user = Secrets.apiUser
-    let password = Secrets.apiPassword
+struct SubsonicAPI {
+    
+    private func getConfig() -> (url: String, user: String, token: String, salt: String)? {
+        // Creem una instància interna per llegir directament
+        let auth = AuthManager()
+        
+        // Si Xcode segueix protestant aquí, és perquè getCredentials necessita ser accessible.
+        guard let creds = auth.getCredentials() else { return nil }
+        return (creds.url, creds.user, creds.token, creds.salt)
+    }
     
     let apiVersion = "1.16.1"
-    let clientName = "socdel73-player"
     
-    func generateAuthParams() -> String {
-        let salt = String(Int.random(in: 100000...999999))
-        let payload = password + salt
+#if os(iOS)
+    let clientName = "dPlayer-iOS"
+#else
+    let clientName = "dPlayer-OSX"
+#endif
+    
+    // Ara aquesta funció ja no necessita calcular res, només agafa el que hi ha al Keychain
+    func generateAuthParams() -> String? {
+        guard let config = getConfig() else { return nil }
         
-        let hash = Insecure.MD5.hash(data: payload.data(using: .utf8)!)
-        let token = hash.map { String(format: "%02hhx", $0) }.joined()
-        
-        return "u=\(user)&t=\(token)&s=\(salt)&v=\(apiVersion)&c=\(clientName)&f=json"
+        // Retornem la cadena d'autenticació ja muntada
+        return "u=\(config.user)&t=\(config.token)&s=\(config.salt)&v=\(apiVersion)&c=\(clientName)&f=json"
     }
     
-    // NOU: Afegim el control de mida de la caràtula
     func getCoverArtURL(id: String, size: Int = 600) -> URL? {
-        let auth = generateAuthParams()
-        let urlString = "\(baseURL)/getCoverArt?id=\(id)&\(auth)&size=\(size)"
+        guard let config = getConfig(),
+              let authParams = generateAuthParams() else { return nil }
+        
+        // Netegem la URL base per assegurar-nos que acaba en /rest
+        let baseURL = config.url.hasSuffix("/") ? "\(config.url)rest" : "\(config.url)/rest"
+        
+        let urlString = "\(baseURL)/getCoverArt?id=\(id)&\(authParams)&size=\(size)"
         return URL(string: urlString)
     }
+    
 }
