@@ -1,12 +1,16 @@
+// views/ContentView.swift
+
 import SwiftUI
 
 struct ContentView: View {
     @StateObject private var viewModel = LibraryViewModel()
+    @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
-        NavigationView {
+        // NavigationStack és el successor modern de NavigationView (iOS 16+ / macOS 13+)
+        NavigationStack {
             VStack(spacing: 0) {
-                // Selector de Biblioteca
+                // Selector de Biblioteca (Adaptatiu)
                 if !viewModel.folders.isEmpty {
                     Picker("Biblioteca", selection: $viewModel.selectedFolderId) {
                         Text("Totes").tag(nil as Int?)
@@ -16,22 +20,20 @@ struct ContentView: View {
                     }
                     .pickerStyle(.segmented)
                     .padding()
-                    .onChange(of: viewModel.selectedFolderId) { newValue in
-                        Task { await viewModel.folderChanged(to: newValue) }
-                    }
                 }
                 
                 // Graella d'Àlbums
                 ScrollView {
                     if viewModel.isLoading && viewModel.albums.isEmpty {
-                        ProgressView("Connectant a Nebraska...").padding(.top, 50)
+                        ProgressView("Connectant a Nebraska...")
+                            .padding(.top, 50)
                     } else {
-                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: layoutColumns), spacing: 16) {
                             ForEach(viewModel.albums) { album in
-                                NavigationLink(destination: AlbumDetailView(album: album)) {
+                                NavigationLink(value: album) {
                                     AlbumCardView(album: album)
                                 }
-                                .buttonStyle(PlainButtonStyle())
+                                .buttonStyle(.plain)
                             }
                         }
                         .padding()
@@ -39,17 +41,33 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("SocDel73 Player")
-            
-        }
-        .navigationTitle("SocDel73 Player")
-#if os(iOS)
-        // Aquesta part només s'executarà en iPhone i iPad
-        .navigationViewStyle(StackNavigationViewStyle())
-#endif
-        .task {
-            await viewModel.setup()
+            // Destinacions de navegació modernes
+            .navigationDestination(for: Album.self) { album in
+                AlbumDetailView(album: album)
+            }
+            // Toolbar multiplataforma amb botó de Logout
+            .toolbar {
+                ToolbarItem(placement: .automatic) {
+                    Button(role: .destructive) {
+                        authManager.logout()
+                    } label: {
+                        Label("Sortir", systemImage: "rectangle.portrait.and.arrow.right")
+                    }
+                    .help("Tancar sessió de Nebraska") // Només es veu a macOS al passar el ratolí
+                }
+            }
+            .task {
+                await viewModel.setup()
+            }
         }
     }
     
+    // Lògica simple per adaptar columnes segons plataforma
+    private var layoutColumns: Int {
+#if os(macOS)
+        return 4 // A Nebraska (Mac) volem veure més caràtules
+#else
+        return 2 // A l'iPhone, dues columnes és l'estàndard audiòfil
+#endif
+    }
 }
-

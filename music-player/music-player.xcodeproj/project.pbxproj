@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		030E25022FAB922700CB0D60 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030E25012FAB921500CB0D60 /* Credentials.swift */; };
 		033AC7022FA8ED2400E880E5 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033AC7012FA8ED2300E880E5 /* AuthManager.swift */; };
 		033AC7092FA8F08400E880E5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033AC7082FA8F08100E880E5 /* LoginView.swift */; };
 		033FD42A2FA7A63600D28E72 /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FD4292FA7A63300D28E72 /* LibraryViewModel.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		030E25012FAB921500CB0D60 /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		033AC7012FA8ED2300E880E5 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		033AC7082FA8F08100E880E5 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		033FD4292FA7A63300D28E72 /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 		03FA05A42FA50A9E0033A86A /* models */ = {
 			isa = PBXGroup;
 			children = (
+				030E25012FAB921500CB0D60 /* Credentials.swift */,
 				03FA05B42FA51AE50033A86A /* MusicFolder.swift */,
 				03FA05B02FA517BC0033A86A /* Songs.swift */,
 				03FA05AE2FA512D50033A86A /* Album.swift */,
@@ -284,6 +287,7 @@
 				03FA05B32FA5188F0033A86A /* AlbumDetailView.swift in Sources */,
 				035893EF2FA6A042000839E2 /* AlbumDetailViewModel.swift in Sources */,
 				03FA05B52FA51AE60033A86A /* MusicFolder.swift in Sources */,
+				030E25022FAB922700CB0D60 /* Credentials.swift in Sources */,
 				03FA05B12FA517C20033A86A /* Songs.swift in Sources */,
 				033AC7092FA8F08400E880E5 /* LoginView.swift in Sources */,
 				03FA05AF2FA5145B0033A86A /* Album.swift in Sources */,

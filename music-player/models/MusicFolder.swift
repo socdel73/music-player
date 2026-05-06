@@ -1,26 +1,29 @@
 import Foundation
 
-// El contenidor principal de la resposta de l'API
 struct SubsonicFoldersResponse: Codable {
-    let subsonicResponse: SubsonicFoldersData
+    let subsonicResponse: SubsonicFoldersResult
     
     enum CodingKeys: String, CodingKey {
+        // Crucial: Navidrome envia "subsonic-response" amb guionet
         case subsonicResponse = "subsonic-response"
     }
 }
 
-struct SubsonicFoldersData: Codable {
-    let musicFolders: MusicFoldersList
+struct SubsonicFoldersResult: Codable {
+    let status: String
+    let version: String
+    let musicFolders: MusicFoldersContainer?
+    
+    enum CodingKeys: String, CodingKey {
+        case status, version, musicFolders
+    }
 }
 
-struct MusicFoldersList: Codable {
+struct MusicFoldersContainer: Codable {
     let musicFolder: [MusicFolder]
 }
 
-/// L'objecte que representa una "Biblioteca" a Nebraska (ex: "CDs", "Directes Nugs")
-struct MusicFolder: Identifiable, Codable, Hashable {
-    let id: Int // Navidrome utilitza Ints per als IDs de carpetes
+struct MusicFolder: Codable, Identifiable, Hashable {
+    let id: Int
     let name: String
-    
-    // Identifiable requereix un ID únic, l'Int ja ens serveix
 }

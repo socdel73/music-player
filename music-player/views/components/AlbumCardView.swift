@@ -36,8 +36,7 @@ struct AlbumCardView: View {
                 .font(.headline)
                 .lineLimit(1)
             
-            Text(album.artist)
-                .font(.subheadline)
+            Text(album.artist ?? "Artista desconegut")                .font(.subheadline)
                 .foregroundColor(.secondary)
                 .lineLimit(1)
         }

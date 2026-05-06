@@ -1,46 +1,36 @@
 import Foundation
 
-// 1. La capa exterior del JSON (General)
-struct SubsonicResponse: Codable {
-    let subsonicResponse: SubsonicData
+// Contenidor Arrel per a qualsevol resposta de Nebraska
+struct SubsonicResponse<T: Codable>: Codable {
+    let subsonicResponse: T
     
     enum CodingKeys: String, CodingKey {
         case subsonicResponse = "subsonic-response"
     }
 }
 
-// 2. Estructura per a Llistes d'Àlbums (Recent, Newest, etc.)
-struct SubsonicAlbumListResponse: Codable {
-    let subsonicResponse: SubsonicAlbumListContent
+// Resultat específic per a Llistes d'Àlbums
+struct SubsonicAlbumListResult: Codable {
+    let status: String
+    let version: String
+    let albumList2: AlbumList2Container?
     
     enum CodingKeys: String, CodingKey {
-        case subsonicResponse = "subsonic-response"
+        case status, version, albumList2
     }
 }
 
-struct SubsonicAlbumListContent: Codable {
-    let albumList2: AlbumList2
-}
-
-struct AlbumList2: Codable {
+struct AlbumList2Container: Codable {
     let album: [Album]
 }
 
-// 3. Contingut de dades genèric (per a altres crides)
-struct SubsonicData: Codable {
-    let albumList2: AlbumList2?
-    // Aquí anirem afegint musicFolders, etc. a mesura que calgui
-}
-
-// 4. L'objecte principal: L'Àlbum
-struct Album: Identifiable, Codable {
+// L'objecte Àlbum (El cor de la col·lecció)
+struct Album: Codable, Identifiable, Hashable {
     let id: String
     let name: String
-    let artist: String
+    let artist: String?
     let year: Int?
     let coverArt: String?
     
-    var isLive: Bool {
-        name.contains("-") || name.lowercased().contains("live")
-    }
+    // Swift genera automàticament Hashable/Equatable si els camps ho són
 }

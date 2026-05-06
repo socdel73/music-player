@@ -3,9 +3,11 @@ import CryptoKit
 
 struct SubsonicAPI {
     
+
+    
     private func getConfig() -> (url: String, user: String, token: String, salt: String)? {
         // Creem una instància interna per llegir directament
-        let auth = AuthManager()
+        let auth = AuthManager.shared
         
         // Si Xcode segueix protestant aquí, és perquè getCredentials necessita ser accessible.
         guard let creds = auth.getCredentials() else { return nil }
@@ -13,6 +15,7 @@ struct SubsonicAPI {
     }
     
     let apiVersion = "1.16.1"
+    static let shared = SubsonicAPI()
     
 #if os(iOS)
     let clientName = "dPlayer-iOS"
@@ -20,12 +23,18 @@ struct SubsonicAPI {
     let clientName = "dPlayer-OSX"
 #endif
     
-    // Ara aquesta funció ja no necessita calcular res, només agafa el que hi ha al Keychain
     func generateAuthParams() -> String? {
-        guard let config = getConfig() else { return nil }
+        // Utilitzem el shared per garantir que llegim les credencials actuals
+        guard let creds = AuthManager.shared.userCredentials else { return nil }
         
-        // Retornem la cadena d'autenticació ja muntada
-        return "u=\(config.user)&t=\(config.token)&s=\(config.salt)&v=\(apiVersion)&c=\(clientName)&f=json"
+        let user = creds.user
+        let token = creds.token
+        let salt = creds.salt
+        let version = "1.16.1" // Versió estàndard de l'API
+        let client = "SocDel73Player"
+        
+        // Crucial: format=json és obligatori perquè el nostre Decoder no sap llegir XML
+        return "u=\(user)&t=\(token)&s=\(salt)&v=\(version)&c=\(client)&f=json"
     }
     
     func getCoverArtURL(id: String, size: Int = 600) -> URL? {
