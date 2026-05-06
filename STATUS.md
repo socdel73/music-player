@@ -1,5 +1,49 @@
 # Estat del Projecte: SocDel73 Player
 
+📝 ACTA DE SESSIÓ: 06/05/2026
+Estat del Projecte: Finalització de la Fase 4 i Obertura de la Fase 2 (Motor de So).
+
+✅ ASSOLIMENTS D'AVUI (Fase 4 & 2)
+Sincronització de Seguretat: S'ha unificat el sistema de credencials MD5 Salted Token. El Keychain ja és funcional i persistent en ambdues plataformes.
+
+Resolució de Bloquejos de Xarxa: S'han corregit els permisos del Sandbox de macOS (Outgoing Connections), permetent que el Mac llisti els àlbums igual que l'iPad.
+
+Model de Dades Robus: S'ha implementat el model genèric SubsonicResponse<T> que permet llegir errors del servidor i dades de forma flexible.
+
+Primer So (Alpha Stage): L'app ja "sona" a l'iPad. Hem confirmat que les metadades (cançons i àlbums) arriben i es reprodueixen.
+
+🛠️ ARXIUS CLAU EN L'ÚLTIM PUSH
+Models/Credentials.swift: Estructura única de sessió.
+
+Utilities/String+MD5.swift: Extensió de criptografia centralitzada.
+
+ViewModels/AuthManager.swift: Gestió del Singleton shared i inicialització de sessió.
+
+Networking/NavidromeService.swift: Crides asíncrones amb gestió d'errors i paràmetres de stream optimitzats.
+
+ViewModels/AudioPlayerManager.swift: Primera versió del motor de reproducció basat en AVFoundation.
+
+🚀 PROPERS PASSOS: FASE 2 (L'EXPERIÈNCIA AUDIÒFILA)
+A la propera sessió, deixarem de banda la infraestructura i ens tancarem a la Sala d'Escoltes. L'objectiu és que "SocDel73 Player" no soni com una app qualsevol, sinó com un component d'alta fidelitat.
+
+Bit-Perfect Audit:
+
+Verificarem que Navidrome no transcodifica (forçar FLAC original).
+
+Configurarem el buffer de AVPlayer per evitar micro-talls i optimitzar la latència.
+
+Gapless Playback (Fase Inicial):
+
+Començarem a dissenyar el sistema de pre-fetching de la següent cançó. Crucial per als directes de Bruce Springsteen on el so no s'ha d'aturar entre cançons.
+
+UI de Reproducció (Mini-Player):
+
+Crearem una barra de control persistent que mostri la qualitat del fitxer (Sample Rate, Bit Depth).
+
+Gestió de Cues (Queue Management):
+
+Poder afegir un àlbum sencer a la cua de reproducció sense que l'app oblidi l'ordre dels tracks.
+
 Sessió: 04/05/2026 - Tancament de la Fase 4
 
 ✅ ESTAT ACTUAL: FASE 4 FINALITZADA
