@@ -1,0 +1,40 @@
+Anem a posar ordre immediatament. Segons l'acta del 06/05/2026, hem tancat amb èxit la Fase 4 (Autenticació/Keychain) i hem obert la Fase 2 (Motor de So). Ja tenim dades, tenim seguretat i tenim els 37 àlbums llistats tant a iOS com a macOS.
+
+Aquí tens el resum executiu per "netejar" el cap i l'estat del projecte abans de la propera sessió:
+
+🛡️ ESTAT ACTUAL: Punt de Control Alpha 1.0
+Fase 4 (Autenticació): ✅ COMPLETADA. Ja no depenem de Secrets.swift. El sistema és dinàmic i segur.
+Fase 1 (Fonaments): ✅ COMPLETADA. Navidrome respon i el model genèric <T> és robust.
+Fase 2 (Motor de So): 🚧 EN CURS (Prioritat Màxima). L'app sona, però encara no hem certificat la puresa "Audiòfila".
+
+🛠️ ARQUITECTURA DE SISTEMES (Llista de Fitxers Vius)
+Per no repetir codi demà, aquests són els teus arxius "sagrats":
+
+Models: Credentials.swift, Album.swift, MusicFolder.swift.
+
+Networking: SubsonicAPI.swift, NavidromeService.swift.
+
+ViewModels: AuthManager.shared (Sessió), AudioPlayerManager.shared (So), LibraryViewModel (Dades).
+
+Utilities: KeychainHelper.swift, String+MD5.swift.
+
+📅 PROPERA SESSIÓ: "L'Audició Bit-Perfect"
+Demà no picarem codi de UI. Demà ens convertim en enginyers de so. El full de ruta és:
+
+1. Auditoria de Flux (Bit-Perfect)
+Verificarem que el buffer d'àudio que surt del teu Mac/iPad cap als auriculars o DAC és una còpia exacta del FLAC de Nebraska.
+
+Acció: Revisar els paràmetres de AVAudioEngine i assegurar format=raw a la URL de stream.
+
+2. Implementació de Gapless Playback (Fase Inicial)
+Els directes del Bruce no poden tenir 2 segons de silenci entre cançons. És inacceptable.
+
+Acció: Començar a programar el "Pre-fetcher". Mentre sona la cançó A, el buffer de la cançó B ja s'ha d'estar omplint en silenci.
+
+3. Telemetria a la Consola
+Farem que l'app ens digui la veritat: "Estic reproduint a 44.1kHz / 16bit" o "Atenció: S'està produint transcodificació".
+
+⚠️ LÍNIES VERMELLES (RECORDA)
+PROHIBIT tocar colors, botons verds o logotips. La UI és un esquelet i així es quedarà fins que el so sigui perfecte.
+
+PROHIBIT afegir funcionalitats de "favorits" o "playlists" encara. Primer el motor, després els extres.
