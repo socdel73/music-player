@@ -1,5 +1,32 @@
 # Estat del Projecte: SocDel73 Player
 
+📅 Sessió: 07/05/2026 - Consolidació Motor Audiòfil i Gapless
+✅ ESTAT ACTUAL: FASE 2 COMPLETADA (Motor de So)
+Motor d'Àudio: Consolidat l'ús d'AVAudioEngine amb configuració de sortida a 32-bit.
+
+Telemetria Real: Implementat sistema de diagnòstic que llegeix el format real del buffer (confirmat streaming a 48.0kHz des de Nebraska).
+
+Gapless Playback: Sistema de Pre-fetching operatiu. L'app descarrega la següent pista de la cua mentre sona l'actual per eliminar el silenci entre tracks.
+
+Sincronització de Cues: Corregit el "bug dels fantasmes" mitjançant la cancel·lació de tasques (downloadTask.cancel()) al canviar d'àlbum.
+
+UI Informativa: Mini-player actualitzat amb títol, àlbum i etiqueta de qualitat dinàmica (Blau per CD, Taronja per Hi-Res).
+
+🛠️ ARXIUS DE REFERÈNCIA ACTUALITZATS
+viewmodels/AudioPlayerManager.swift: Motor principal amb lògica de cues i resets.
+
+viewmodels/AudioPlayerManager+Telemetry.swift: Extensió de diagnòstic tècnic.
+
+views/AlbumDetailView.swift: Interfície de reproducció dinàmica.
+
+🚧 PROPERS PASSOS: FASE 3 (BIBLIOTECA & PERSISTÈNCIA)
+Persistència de Cua: Que l'app recordi què sonava si la tanquem.
+
+Refactor de la Biblioteca: Millorar la navegació entre carpetes de Nebraska (Bruce vs David vs CDs).
+
+Millora de l'Streaming: Investigar el canvi de downloadTask a dataTask per fer streaming progressiu real (començar a sonar abans de baixar tot el fitxer).
+
+
 📝 ACTA DE SESSIÓ: 06/05/2026
 Estat del Projecte: Finalització de la Fase 4 i Obertura de la Fase 2 (Motor de So).
 
