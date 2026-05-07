@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		030E25022FAB922700CB0D60 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030E25012FAB921500CB0D60 /* Credentials.swift */; };
+		030E25072FAB9E2B00CB0D60 /* STATUS2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 030E25062FAB9E2B00CB0D60 /* STATUS2.txt */; };
 		033AC7022FA8ED2400E880E5 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033AC7012FA8ED2300E880E5 /* AuthManager.swift */; };
 		033AC7092FA8F08400E880E5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033AC7082FA8F08100E880E5 /* LoginView.swift */; };
 		033FD42A2FA7A63600D28E72 /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033FD4292FA7A63300D28E72 /* LibraryViewModel.swift */; };
 		035893ED2FA69BAB000839E2 /* STATUS.md in Resources */ = {isa = PBXBuildFile; fileRef = 035893EC2FA69BAB000839E2 /* STATUS.md */; };
 		035893EF2FA6A042000839E2 /* AlbumDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035893EE2FA6A03E000839E2 /* AlbumDetailViewModel.swift */; };
+		03E6C0AD2FAD2C1500244D69 /* AudioPlayerManager+Telemetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E6C0AC2FAD2C1400244D69 /* AudioPlayerManager+Telemetry.swift */; };
 		03FA059C2FA505D10033A86A /* NavidromeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA059B2FA504810033A86A /* NavidromeService.swift */; };
 		03FA05A12FA507C20033A86A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA059E2FA507C20033A86A /* ContentView.swift */; };
 		03FA05A22FA507C20033A86A /* music_playerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA059F2FA507C20033A86A /* music_playerApp.swift */; };
@@ -28,12 +30,14 @@
 
 /* Begin PBXFileReference section */
 		030E25012FAB921500CB0D60 /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		030E25062FAB9E2B00CB0D60 /* STATUS2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = STATUS2.txt; sourceTree = "<group>"; };
 		033AC7012FA8ED2300E880E5 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		033AC7082FA8F08100E880E5 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		033FD4292FA7A63300D28E72 /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
 		035893EC2FA69BAB000839E2 /* STATUS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = STATUS.md; path = ../STATUS.md; sourceTree = SOURCE_ROOT; };
 		035893EE2FA6A03E000839E2 /* AlbumDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewModel.swift; sourceTree = "<group>"; };
 		039788C42FA4FE4A0083925C /* music-player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "music-player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		03E6C0AC2FAD2C1400244D69 /* AudioPlayerManager+Telemetry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayerManager+Telemetry.swift"; sourceTree = "<group>"; };
 		03FA05992FA5021B0033A86A /* SubsonicAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsonicAPI.swift; sourceTree = "<group>"; };
 		03FA059B2FA504810033A86A /* NavidromeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavidromeService.swift; sourceTree = "<group>"; };
 		03FA059D2FA507C20033A86A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -95,6 +99,7 @@
 			children = (
 				033AC6FD2FA8ECDD00E880E5 /* Utilities */,
 				035893EC2FA69BAB000839E2 /* STATUS.md */,
+				030E25062FAB9E2B00CB0D60 /* STATUS2.txt */,
 				03FA05A42FA50A9E0033A86A /* models */,
 				03FA05A82FA50A9E0033A86A /* networking */,
 				03FA05A92FA50A9E0033A86A /* viewmodels */,
@@ -179,6 +184,7 @@
 		03FA05A92FA50A9E0033A86A /* viewmodels */ = {
 			isa = PBXGroup;
 			children = (
+				03E6C0AC2FAD2C1400244D69 /* AudioPlayerManager+Telemetry.swift */,
 				033AC7012FA8ED2300E880E5 /* AuthManager.swift */,
 				033FD4292FA7A63300D28E72 /* LibraryViewModel.swift */,
 				035893EE2FA6A03E000839E2 /* AlbumDetailViewModel.swift */,
@@ -265,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				035893ED2FA69BAB000839E2 /* STATUS.md in Resources */,
+				030E25072FAB9E2B00CB0D60 /* STATUS2.txt in Resources */,
 				03FA05A32FA507C20033A86A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,6 +286,7 @@
 				03FA05AB2FA50A9E0033A86A /* SubsonicAPI.swift in Sources */,
 				03FA05B72FA527530033A86A /* AudioPlayerManager.swift in Sources */,
 				033FD42A2FA7A63600D28E72 /* LibraryViewModel.swift in Sources */,
+				03E6C0AD2FAD2C1500244D69 /* AudioPlayerManager+Telemetry.swift in Sources */,
 				03FA05AD2FA50A9E0033A86A /* NavidromeService.swift in Sources */,
 				03FA05A12FA507C20033A86A /* ContentView.swift in Sources */,
 				03FA05A22FA507C20033A86A /* music_playerApp.swift in Sources */,
