@@ -65,13 +65,31 @@ struct AlbumDetailView: View {
     }
     
     var reproductorInferior: some View {
-        VStack(spacing: 10) {
-            // Barra de progrés
-            if audioManager.duration > 0 {
-                ProgressView(value: audioManager.currentTime, total: audioManager.duration)
-                    .tint(.blue)
+        VStack(spacing: 12) {
+            
+            // 1. INFO DE LA CANÇÓ (El que faltava!)
+            if let song = audioManager.currentSong {
+                VStack(spacing: 2) {
+                    Text(song.title)
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.primary)
+                        .lineLimit(1)
+                    
+                    Text(album.name ?? album.name) // Si la song no té àlbum, usem el de la vista
+                        .font(.system(size: 13))
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
+                }
+                .padding(.top, 5)
             }
             
+            // 2. BARRA DE PROGRÉS
+            if audioManager.duration > 0 {
+                ProgressView(value: audioManager.currentTime, total: audioManager.duration)
+                    .tint(audioManager.currentSampleRate > 44100 ? .orange : .blue)
+            }
+            
+            // 3. CONTROLS
             HStack(spacing: 40) {
                 Button(action: { audioManager.previousTrack() }) {
                     Image(systemName: "backward.fill").font(.title2)
@@ -87,18 +105,27 @@ struct AlbumDetailView: View {
                 }
             }
             
-            // Etiqueta Audiòfila
+            // 4. ETIQUETA AUDIÒFILA (Millorada)
             if audioManager.currentSampleRate > 0 {
-                Text("BIT-PERFECT: \(Int(audioManager.currentSampleRate/1000))kHz")
-                    .font(.system(size: 10, weight: .bold, design: .monospaced))
-                    .foregroundColor(.secondary)
+                HStack(spacing: 4) {
+                    Image(systemName: audioManager.currentSampleRate > 44100 ? "bolt.fill" : "waveform")
+                    Text("BIT-PERFECT: \(Int(audioManager.currentSampleRate/1000))kHz")
+                }
+                .font(.system(size: 10, weight: .black, design: .monospaced))
+                .padding(.horizontal, 8)
+                .padding(.vertical, 2)
+                .background(audioManager.currentSampleRate > 44100 ? Color.orange.opacity(0.2) : Color.gray.opacity(0.1))
+                .foregroundColor(audioManager.currentSampleRate > 44100 ? .orange : .secondary)
+                .cornerRadius(3)
             }
         }
         .padding()
         .background(.ultraThinMaterial)
-        .cornerRadius(15)
+        .cornerRadius(20)
+        .shadow(radius: 10)
         .padding()
     }
+    
 }
 
 // Helper per al temps
